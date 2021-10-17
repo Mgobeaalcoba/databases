@@ -23,3 +23,13 @@ FROM pokemon_proyects.pokemon AS p
 GROUP BY p.tipo_1
 HAVING avg(a.ataque) > 80
 ORDER BY AVG(a.vida) DESC;
+-- Consulta donde creo una columna temporal con CASE para categorizar pokemones en función de su ataque especial
+SELECT p.id, p.pokemon_name, p.tipo_1, p.tipo_2, a.vida, a.ataque, a.defensa, a.ataque_especial, a.defensa_especial, a.velocidad,
+CASE 
+	WHEN a.ataque_especial > 80 THEN "Muy poderoso"
+    WHEN a.ataque_especial > 60 THEN "Bastante poderoso"
+    ELSE "Algo debil"
+END AS "categorizacion"
+FROM pokemon_proyects.pokemon AS p
+	INNER JOIN pokemon_proyects.atributos AS a ON p.id = a.pokemon_id
+ORDER BY a.velocidad DESC;
